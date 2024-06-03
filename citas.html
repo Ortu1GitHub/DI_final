@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es" data-bs-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.118.2">
+  <link rel="icon" href="imagenes/cruz-medica.png" type="image/x-icon">
+  <title>Gestión Hospital</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/offcanvas-navbar.css" rel="stylesheet">
+  <link href="css/personal.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-body-tertiary">
+  <script src="./js/citasController.js" defer></script>
+
+  <!-- barra título navegación  -->
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Gestión Hospital</a>
+      <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="citas.html">Citas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="medicos.html">Médicos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="pacientes.html">Pacientes</a>
+          </li>
+       
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor superior de título central  -->
+
+  <main class="container mt-5 pt-5">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-black rounded shadow-sm">
+      <div class="lh-1">
+        <h1 class="h6 mb-0 text-white lh-1">Mantenimiento de Citas</h1>
+      </div>
+    </div>
+
+    <div class="p-3 my-3 bg-light rounded shadow-sm">
+      <!-- formulario de filtros  -->
+      <div class="lh-1">
+        <form id='filtroForm' class="form-inline">
+          <div class="row g-3 align-items-center">
+            <div class="col-md-1">
+              <label for="id" class="col-form-label">ID:</label>
+              <input type="text" id="id" name="id" class="form-control" value="" disabled>
+            </div>
+            <div class="col-md-3">
+              <label for="fecha" class="col-form-label">Fecha:</label>
+              <input type="datetime-local" id="fecha" name="fecha" class="form-control" value="" required>
+            </div>
+            <div class="col-md-3">
+              <label for="paciente" class="col-form-label">Paciente:</label>
+              <select id="paciente_id" name="paciente_id" class="form-control" required>
+                <!-- Aquí se cargarán los médicos disponibles -->
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="medico" class="col-form-label">Médico:</label>
+              <select id="medico_id" name="medico_id" class="form-control" required>
+                <!-- Aquí se cargarán los médicos disponibles -->
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="enfermero" class="col-form-label">Enfermero:</label>
+              <select id="enfermero_id" name="enfermero_id" class="form-control" required>
+                <!-- Aquí se cargarán los enfermeros disponibles -->
+              </select>
+            </div>
+          </div>
+          <div class="row g-3 align-items-center mt-3">
+            <div class="col-md-7">
+              <input type="text" id="search" name="search" class="form-control" placeholder="Buscar">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-primary" type="submit" id="buscar">Buscar</button>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-success" type="button" id="insertar">Insertar</button>
+            </div>
+          
+            <div class="col-md-1">
+              <button class="btn btn-warning" type="button" id="limpiar">Limpiar</button>
+            </div>
+
+            <div class="col-md-1">
+              <button class="btn btn-dark" type="button" id="actualizar">Actualizar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id='lista_citas' class="my-3 p-3 bg-body rounded shadow-sm">
+      <!-- paciente cita del listado  -->
+      <h6 class="border-bottom pb-2 mb-0">Listado de citas</h6>
+      <div id='lista_citas2' class="d-flex text-body-secondary pt-3">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="bg-black text-white">ID</th>
+              <th scope="col" class="bg-black text-white">Paciente</th>
+              <th scope="col" class="bg-black text-white">Fecha</th>
+              <th scope="col" class="bg-black text-white">Médico</th>
+              <th scope="col" class="bg-black text-white">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="citasTableBody">
+            <!-- Aquí se cargarán las citas -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <nav aria-label="Ejemplo de paginación">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#" data-action="primera"><<</a></li>
+        <li class="page-item"><a class="page-link" href="#" data-action="anterior"><</a></li>
+        <li class="page-item"><span class="page-link" id="page-info"></span></li>
+        <li class="page-item"><a class="page-link" href="#" data-action="siguiente">></a></li>
+        <li class="page-item"><a class="page-link" href="#" data-action="ultima">>></a></li>
+        <li id="detalleregistros" class="col-sm-3"></li>
+      </ul>
+    </nav>
+  </main>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.js"></script>
+</body>
+
+</html>

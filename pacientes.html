@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es" data-bs-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.118.2">
+  <title>Gestión Hospital</title>
+
+  <link rel="icon" href="imagenes/cruz-medica.png" type="image/x-icon">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/offcanvas-navbar.css" rel="stylesheet">
+  <link href="css/personal.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-body-tertiary">
+  <script src="./js/pacientesController.js" defer></script>
+
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Gestión Hospital</a>
+      <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="citas.html">Citas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="medicos.html">Médicos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="pacientes.html">Pacientes</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor superior de título central  -->
+
+  <main class="container mt-5 pt-5">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-black rounded shadow-sm">
+      <div class="lh-1">
+        <h1 class="h6 mb-0 text-white lh-1">Mantenimiento de Pacientes</h1>
+      </div>
+    </div>
+
+    <div class="p-3 my-3 bg-light rounded shadow-sm">
+      <!-- formulario de filtros  -->
+      <div class="lh-1">
+        <form id='filtroForm' class="form-inline">
+          <div class="row g-3 align-items-center">
+            <div class="col-md-3">
+              <label for="sip" class="col-form-label">SIP:</label>
+              <input type="text" id="sip" name="si`p" class="form-control" value="">
+            </div>
+            <div class="col-md-3">
+              <label for="dni" class="col-form-label">DNI:</label>
+              <input type="text" id="dni" name="dni" class="form-control" value="">
+            </div>
+            <div class="col-md-3">
+              <label for="nombre" class="col-form-label">Nombre:</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" value="">
+            </div>
+            <div class="col-md-3">
+              <label for="apellido" class="col-form-label">Apellido:</label>
+              <input type="text" id="apellido" name="apellido" class="form-control" value="">
+            </div>
+            <div class="col-md-3">
+                <label for="apellido2" class="col-form-label">Apellido 2:</label>
+                <input type="text" id="apellido2" name="apellido2" class="form-control" value="">
+              </div>
+              <div class="col-md-3">
+                <label for="telefono" class="col-form-label">Telefono:</label>
+                <input type="phone" id="telefono" name="telefono" class="form-control" value="">
+              </div>
+              <div class="col-md-3">
+                <label for="fecha" class="col-form-label">Fecha de Nacimiento:</label>
+                <input type="datetime-local" id="fecha" name="fecha" class="form-control">
+
+            </div>
+              
+
+          </div>
+          <div class="row g-3 align-items-center mt-3">
+            <div class="col-md-7">
+              <input type="text" id="search" name="search" class="form-control" placeholder="Buscar">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-primary" type="button" id="buscar">Buscar</button>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-success" type="button" id="insertar">Insertar</button>
+            </div>
+          
+            <div class="col-md-1">
+              <button class="btn btn-warning" type="button" id="limpiar">Limpiar</button>
+            </div>
+
+            <div class="col-md-1">
+              <button class="btn btn-dark" type="button" id="actualizar">Actualizar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id='lista_pacientes' class="my-3 p-3 bg-body rounded shadow-sm">
+      <!-- paciente cita del listado  -->
+      <h6 class="border-bottom pb-2 mb-0">Listado de pacientes</h6>
+      <div id='lista_pacientes2' class="d-flex text-body-secondary pt-3">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="bg-black text-white">SIP</th>
+              <th scope="col" class="bg-black text-white">DNI</th>
+              <th scope="col" class="bg-black text-white">Nombre</th>
+              <th scope="col" class="bg-black text-white">Apellido</th>
+              <th scope="col" class="bg-black text-white">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="pacienteTableBody">
+            <!-- Aquí se cargarán las citas -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <nav aria-label="Ejemplo de paginación">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#" data-action="primera"><<</a></li>
+        <li class="page-item"><a class="page-link" href="#" data-action="anterior"><</a></li>
+        <li class="page-item"><span class="page-link" id="page-info"></span></li>
+        <li class="page-item"><a class="page-link" href="#" data-action="siguiente">></a></li>
+        <li class="page-item"><a class="page-link" href="#" data-action="ultima">>></a></li>
+        <li id="detalleregistros" class="col-sm-3"></li>
+      </ul>
+    </nav>
+  </main>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.js"></script>
+</body>
+
+</html>
+
