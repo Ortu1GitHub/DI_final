@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-body-tertiary">
-  <script src="./js/medicosController.js" defer></script>
+  <script src="medicosController4.js" defer></script>
 
 
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
@@ -27,10 +27,10 @@
       <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="citas.html">Citas</a>
+            <a class="nav-link active" href="citas.html">Citas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="medicos.html">Médicos</a>
+            <a class="nav-link" href="medicos.html">Médicos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="pacientes.html">Pacientes</a>
@@ -71,38 +71,15 @@
               <label for="apellido" class="col-form-label">Apellido:</label>
               <input type="text" id="apellido" name="apellido" class="form-control" value="">
             </div>
-            <div class="col-md-3">
-                <label for="apellido2" class="col-form-label">Apellido 2:</label>
-                <input type="text" id="apellido2" name="apellido2" class="form-control" value="">
-              </div>
+
               <div class="col-md-3">
                 <label for="telefono" class="col-form-label">Telefono:</label>
                 <input type="phone" id="telefono" name="telefono" class="form-control" value="">
               </div>
-              <div class="col-md-3">
-                <label for="especialidad" class="col-form-label">Especialidad:</label>
-                <select id="especialidad_id" name="especialidad_id" class="form-control" required>
-                  <!-- Aquí se cargarán las especialidades disponibles -->
-                </select>
-              </div>
-              <div class="col-md-3">
-                <label for="horario" class="col-form-label">Horario:</label>
-                <select id="horario_id" name="horario_id" class="form-control" required>
-                  <!-- Aquí se cargarán los horarios disponibles -->
-                </select>
-              </div>
-              <div class="col-md-3">
-                <label for="usuarios" class="col-form-label">Usuario:</label>
-                <select id="usuario_id" name="usuario_id" class="form-control" required>
-                  <!-- Aquí se cargarán los usuarios disponibles -->
-                </select>
-              </div>
+             
 
           </div>
           <div class="row g-3 align-items-center mt-3">
-            <div class="col-md-7">
-              <input type="text" id="search" name="search" class="form-control" placeholder="Buscar">
-            </div>
             <div class="col-md-1">
               <button class="btn btn-primary" type="button" id="buscar">Buscar</button>
             </div>

@@ -5,7 +5,7 @@ class Conexion extends PDO
     private $hostDB = 'localhost';
     private $nameDB = 'hospital';
     private $userDB = 'root';
-    private $passDB = '';
+    private $passDB = 'Ortuno1!*';
 
     public function __construct()
     {

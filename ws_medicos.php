@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 function listarMedicos($limit, $offset) {
     global $pdo;
-    $sql = "SELECT id, numero_colegiado, dni, nombre, apellido1, apellido2, telefono, especialidad_id, horario_id, user_id FROM medicos LIMIT :limit OFFSET :offset";
+    $sql = "SELECT id, numero_colegiado, dni, nombre, apellido1,  telefono FROM medicos LIMIT :limit OFFSET :offset";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -24,36 +24,53 @@ function contarMedicos() {
 }
 
 
-function buscarMedicosPorFiltro($filtro) {
+function buscarMedicosPorFiltro($filtros) {
     global $pdo;
-    $stmt = $pdo->prepare("SELECT id, numero_colegiado, dni, nombre, apellido1, apellido2, telefono, especialidad_id, horario_id, user_id FROM medicos WHERE nombre LIKE :filtro OR dni LIKE :filtro");
-    $likeFiltro = "%$filtro%";
-    $stmt->bindParam(':filtro', $likeFiltro, PDO::PARAM_STR);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    
+    // Base de la consulta que siempre incluirá el número de colegiado
+    $sql = "SELECT id, numero_colegiado, dni, nombre, apellido1 FROM medicos WHERE 1=1";
+    
+    // Array para los parámetros de la consulta
+    $params = [];
+    
+    // Añadir condiciones dinámicamente basadas en los filtros proporcionados
+    if (!empty($filtros['numero_colegiado'])) {
+        $sql .= " AND numero_colegiado LIKE :numero_colegiado";
+        $params[':numero_colegiado'] = "%" . $filtros['numero_colegiado'] . "%";
+    }
 
-function obtenerEspecialidades() {
-    global $pdo;
-    $sql = "SELECT id, nombre FROM especialidades";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    if (!empty($filtros['dni'])) {
+        $sql .= " AND dni LIKE :dni";
+        $params[':dni'] = "%" . $filtros['dni'] . "%";
+    }
+    
+    if (!empty($filtros['nombre'])) {
+        $sql .= " AND nombre LIKE :nombre";
+        $params[':nombre'] = "%" . $filtros['nombre'] . "%";
+    }
+    
+    if (!empty($filtros['apellido1'])) {
+        $sql .= " AND apellido1 LIKE :apellido1";
+        $params[':apellido1'] = "%" . $filtros['apellido1'] . "%";
+    }
 
-function obtenerHorarios() {
-    global $pdo;
-    $sql = "SELECT id, hora_inicio, hora_fin FROM horarios";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    if (!empty($filtros['telefono'])) {
+        $sql .= " AND telefono LIKE :telefono";
+        $params[':telefono'] = "%" . $filtros['telefono'] . "%";
+    }
 
-function obtenerUsuarios() {
-    global $pdo;
-    $sql = "SELECT id, name FROM users";
+    // Preparar la consulta
     $stmt = $pdo->prepare($sql);
+    
+    // Vincular los parámetros
+    foreach ($params as $key => &$value) {
+        $stmt->bindParam($key, $value, PDO::PARAM_STR);
+    }
+    
+    // Ejecutar la consulta
     $stmt->execute();
+    
+    // Retornar los resultados
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -74,17 +91,14 @@ function obtenerUsuarios() {
                 echo json_encode(['error' => 'El numero del colegiado o dni ya existe.']);
                 exit();
             }
-            $sql = "INSERT INTO medicos (numero_colegiado, dni, nombre, apellido1, apellido2, telefono, especialidad_id, horario_id, user_id) VALUES (:numero_colegiado, :dni, :nombre, :apellido1, :apellido2, :telefono, :especialidad_id, :horario_id, :user_id)";
+            $sql = "INSERT INTO medicos (numero_colegiado, dni, nombre, apellido1, telefono) VALUES (:numero_colegiado, :dni, :nombre, :apellido1, :telefono)";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':numero_colegiado', $datos['numero_colegiado'], PDO::PARAM_STR);
             $stmt->bindParam(':dni', $datos['dni'], PDO::PARAM_STR);
             $stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
-            $stmt->bindParam(':apellido1', $datos['apellido1'], PDO::PARAM_STR);
-            $stmt->bindParam(':apellido2', $datos['apellido2'], PDO::PARAM_STR);
+            $stmt->bindParam(':apellido1', $datos['apellido1'], PDO::PARAM_STR); 
             $stmt->bindParam(':telefono', $datos['telefono'], PDO::PARAM_STR);
-            $stmt->bindParam(':especialidad_id', $datos['especialidad_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':horario_id', $datos['horario_id'], PDO::PARAM_INT);
-            $stmt->bindParam(':user_id', $datos['usuario_id'], PDO::PARAM_INT);
+          
             return $stmt->execute();
 
             return ['success' => true];
@@ -98,16 +112,12 @@ function obtenerUsuarios() {
 
 function actualizarMedico($numero_colegiado, $datos) {
     global $pdo;
-    $sql = "UPDATE medicos SET dni = :dni, nombre = :nombre, apellido1 = :apellido1, apellido2 = :apellido2, telefono = :telefono, especialidad_id = :especialidad_id, horario_id = :horario_id, user_id = :user_id WHERE numero_colegiado = :numero_colegiado";
+    $sql = "UPDATE medicos SET dni = :dni, nombre = :nombre, apellido1 = :apellido1, telefono = :telefono WHERE numero_colegiado = :numero_colegiado";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':dni', $datos['dni'], PDO::PARAM_STR);
     $stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
     $stmt->bindParam(':apellido1', $datos['apellido1'], PDO::PARAM_STR);
-    $stmt->bindParam(':apellido2', $datos['apellido2'], PDO::PARAM_STR);
     $stmt->bindParam(':telefono', $datos['telefono'], PDO::PARAM_STR);
-    $stmt->bindParam(':especialidad_id', $datos['especialidad_id'], PDO::PARAM_INT);
-    $stmt->bindParam(':horario_id', $datos['horario_id'], PDO::PARAM_INT);
-    $stmt->bindParam(':user_id', $datos['usuario_id'], PDO::PARAM_INT);
     $stmt->bindParam(':numero_colegiado', $numero_colegiado, PDO::PARAM_STR);
     return $stmt->execute();
 }
@@ -122,7 +132,7 @@ function eliminarMedico($numero_colegiado) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 2;
+    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 5;
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
     $offset = ($page - 1) * $limit;
 
@@ -131,16 +141,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode(buscarMedicosPorFiltro($filtro));
     } elseif (isset($_GET['numero_colegiado'])) {
         $numero_colegiado = $_GET['numero_colegiado'];
-        $stmt = $pdo->prepare("SELECT id, numero_colegiado, dni, nombre, apellido1, apellido2, telefono, especialidad_id, horario_id, user_id FROM medicos WHERE numero_colegiado = :numero_colegiado");
+        $stmt = $pdo->prepare("SELECT id, numero_colegiado, dni, nombre, apellido1, telefono FROM medicos WHERE numero_colegiado = :numero_colegiado");
         $stmt->bindParam(':numero_colegiado', $numero_colegiado, PDO::PARAM_STR);
         $stmt->execute();
         echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-    } elseif (isset($_GET['especialidades'])) {
-        echo json_encode(obtenerEspecialidades());
-    } elseif (isset($_GET['horarios'])) {
-        echo json_encode(obtenerHorarios());
-    } elseif (isset($_GET['usuarios'])) {
-        echo json_encode(obtenerUsuarios());
     } else {
         $medicos = listarMedicos($limit, $offset);
         $total = contarMedicos();

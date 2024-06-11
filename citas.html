@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-body-tertiary">
-  <script src="./js/citasController.js" defer></script>
+  <script src="citasController.js" defer></script>
 
   <!-- barra título navegación  -->
 
@@ -36,7 +36,6 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="pacientes.html">Pacientes</a>
           </li>
-       
         </ul>
       </div>
     </div>
@@ -51,58 +50,48 @@
       </div>
     </div>
 
-    <div class="p-3 my-3 bg-light rounded shadow-sm">
-      <!-- formulario de filtros  -->
-      <div class="lh-1">
-        <form id='filtroForm' class="form-inline">
-          <div class="row g-3 align-items-center">
-            <div class="col-md-1">
-              <label for="id" class="col-form-label">ID:</label>
-              <input type="text" id="id" name="id" class="form-control" value="" disabled>
-            </div>
-            <div class="col-md-3">
-              <label for="fecha" class="col-form-label">Fecha:</label>
-              <input type="datetime-local" id="fecha" name="fecha" class="form-control" value="" required>
-            </div>
-            <div class="col-md-3">
-              <label for="paciente" class="col-form-label">Paciente:</label>
-              <select id="paciente_id" name="paciente_id" class="form-control" required>
-                <!-- Aquí se cargarán los médicos disponibles -->
-              </select>
-            </div>
-            <div class="col-md-3">
-              <label for="medico" class="col-form-label">Médico:</label>
-              <select id="medico_id" name="medico_id" class="form-control" required>
-                <!-- Aquí se cargarán los médicos disponibles -->
-              </select>
-            </div>
-            <div class="col-md-2">
-              <label for="enfermero" class="col-form-label">Enfermero:</label>
-              <select id="enfermero_id" name="enfermero_id" class="form-control" required>
-                <!-- Aquí se cargarán los enfermeros disponibles -->
-              </select>
-            </div>
-          </div>
-          <div class="row g-3 align-items-center mt-3">
-            <div class="col-md-7">
-              <input type="text" id="search" name="search" class="form-control" placeholder="Buscar">
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-primary" type="submit" id="buscar">Buscar</button>
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-success" type="button" id="insertar">Insertar</button>
-            </div>
-          
-            <div class="col-md-1">
-              <button class="btn btn-warning" type="button" id="limpiar">Limpiar</button>
-            </div>
 
-            <div class="col-md-1">
-              <button class="btn btn-dark" type="button" id="actualizar">Actualizar</button>
-            </div>
+    
+    <div class="p-3 my-3 bg-light rounded shadow-sm">
+     <div class="lh-1">
+
+        
+        <form id='filtroForm' class="form-inline">
+          
+          <input type="hidden" id="id" name="id" class="form-control" value="" disabled>
+          <div class="row g-3 align-items-end">
+              <div class="col-md-2">
+                <label for="fecha" class="col-form-label">Fecha:</label>
+                <input type="datetime-local" id="fecha" name="fecha" class="form-control" value="" required>
+                    
+              </div>
+              <div class="col-md-2">
+                <label for="paciente" class="col-form-label">Paciente:</label>
+                <select id="paciente_id" name="paciente_id" class="form-control" required>
+                  <!-- Aquí se cargarán los médicos disponibles -->
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="medico" class="col-form-label">Médico:</label>
+                <select id="medico_id" name="medico_id" class="form-control" required>
+                  <!-- Aquí se cargarán los médicos disponibles -->
+                </select>
+              </div>
+              
+              <div class="col-md-1">
+                  <button class="btn btn-primary" type="button" id="buscar">Buscar</button>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-success" type="button" id="insertar">Insertar</button>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-warning" type="button" id="limpiar">Limpiar</button>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-dark" type="button" id="actualizar">Actualizar</button>
+              </div>
           </div>
-        </form>
+      </form>
       </div>
     </div>
 
@@ -139,8 +128,6 @@
     </nav>
   </main>
 
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.js"></script>
 </body>
-
 </html>

@@ -15,7 +15,7 @@
 </head>
 
 <body class="bg-body-tertiary">
-  <script src="./js/pacientesController.js" defer></script>
+  <script src="pacientesController.js" defer></script>
 
 
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
@@ -28,13 +28,13 @@
       <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="citas.html">Citas</a>
+            <a class="nav-link active" href="citas.html">Citas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="medicos.html">Médicos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="pacientes.html">Pacientes</a>
+            <a class="nav-link" aria-current="page" href="pacientes.html">Pacientes</a>
           </li>
         
         </ul>
@@ -54,59 +54,51 @@
     <div class="p-3 my-3 bg-light rounded shadow-sm">
       <!-- formulario de filtros  -->
       <div class="lh-1">
+        
         <form id='filtroForm' class="form-inline">
-          <div class="row g-3 align-items-center">
-            <div class="col-md-3">
-              <label for="sip" class="col-form-label">SIP:</label>
-              <input type="text" id="sip" name="si`p" class="form-control" value="">
-            </div>
-            <div class="col-md-3">
-              <label for="dni" class="col-form-label">DNI:</label>
-              <input type="text" id="dni" name="dni" class="form-control" value="">
-            </div>
-            <div class="col-md-3">
-              <label for="nombre" class="col-form-label">Nombre:</label>
-              <input type="text" id="nombre" name="nombre" class="form-control" value="">
-            </div>
-            <div class="col-md-3">
-              <label for="apellido" class="col-form-label">Apellido:</label>
-              <input type="text" id="apellido" name="apellido" class="form-control" value="">
-            </div>
-            <div class="col-md-3">
-                <label for="apellido2" class="col-form-label">Apellido 2:</label>
-                <input type="text" id="apellido2" name="apellido2" class="form-control" value="">
-              </div>
-              <div class="col-md-3">
-                <label for="telefono" class="col-form-label">Telefono:</label>
-                <input type="phone" id="telefono" name="telefono" class="form-control" value="">
-              </div>
-              <div class="col-md-3">
-                <label for="fecha" class="col-form-label">Fecha de Nacimiento:</label>
-                <input type="datetime-local" id="fecha" name="fecha" class="form-control">
-
-            </div>
-              
-
-          </div>
-          <div class="row g-3 align-items-center mt-3">
-            <div class="col-md-7">
-              <input type="text" id="search" name="search" class="form-control" placeholder="Buscar">
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-primary" type="button" id="buscar">Buscar</button>
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-success" type="button" id="insertar">Insertar</button>
-            </div>
           
-            <div class="col-md-1">
-              <button class="btn btn-warning" type="button" id="limpiar">Limpiar</button>
-            </div>
-
-            <div class="col-md-1">
-              <button class="btn btn-dark" type="button" id="actualizar">Actualizar</button>
-            </div>
+          <div class="row g-3 align-items-end">
+              <div class="col-md-2">
+                  <label for="sip" class="col-form-label">SIP:</label>
+                  <input type="text" id="sip" name="sip" class="form-control" value="">
+              </div>
+              <div class="col-md-2">
+                  <label for="dni" class="col-form-label">DNI:</label>
+                  <input type="text" id="dni" name="dni" class="form-control" value="">
+              </div>
+              <div class="col-md-2">
+                  <label for="nombre" class="col-form-label">Nombre:</label>
+                  <input type="text" id="nombre" name="nombre" class="form-control" value="">
+              </div>
+              <div class="col-md-2">
+                  <label for="apellido" class="col-form-label">Apellido:</label>
+                  <input type="text" id="apellido" name="apellido" class="form-control" value="">
+              </div>
+              <div class="col-md-2">
+                  <label for="telefono" class="col-form-label">Telefono:</label>
+                  <input type="phone" id="telefono" name="telefono" class="form-control" value="">
+              </div>
+              <div class="col-md-2">
+                  <label for="fecha" class="col-form-label">Fecha de Nacimiento:</label>
+                  <input type="datetime-local" id="fecha" name="fecha" class="form-control">
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-primary" type="button" id="buscar">Buscar</button>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-success" type="button" id="insertar">Insertar</button>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-warning" type="button" id="limpiar">Limpiar</button>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-dark" type="button" id="actualizar">Actualizar</button>
+              </div>
           </div>
+      </form>
+      
+      </div>
+          
         </form>
       </div>
     </div>
